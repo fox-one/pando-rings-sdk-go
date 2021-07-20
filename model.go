@@ -112,6 +112,55 @@ func (a ActionType) IsValidAction() bool {
 	return a != ActionTypeProposalTransfer
 }
 
+const (
+	// TransactionKeyService key service type :string
+	TransactionKeyService = "service"
+	// TransactionKeyBlock block index :int64
+	TransactionKeyBlock = "block"
+	// TransactionKeySymbol symbol key :string
+	TransactionKeySymbol = "symbol"
+	// TransactionKeyPrice price :decimal
+	TransactionKeyPrice = "price"
+	// TransactionKeyBorrowRate borrow rate :decimal
+	TransactionKeyBorrowRate = "borrow_rate"
+	// TransactionKeySupplyRate supply rate : decimal
+	TransactionKeySupplyRate = "supply_rate"
+	// TransactionKeyAmount amount
+	TransactionKeyAmount = "amount"
+	// TransactionKeyCToken ctokens
+	TransactionKeyCToken = "ctoken"
+	// TransactionKeyInterest interest
+	TransactionKeyInterest = "interest"
+	// TransactionKeyStatus status
+	TransactionKeyStatus = "status"
+	// TransactionKeyUser user
+	TransactionKeyUser = "user"
+	// TransactionKeyErrorCode error code
+	TransactionKeyErrorCode = "error_code"
+	// TransactionKeyReferTrace refer trace
+	TransactionKeyReferTrace = "refer_trace"
+	// TransactionKeyAssetID asset id
+	TransactionKeyAssetID = "asset_id"
+	// TransactionKeyTotalCash total cash
+	TransactionKeyTotalCash = "total_cash"
+	// TransactionKeyTotalBorrows total borrows
+	TransactionKeyTotalBorrows = "total_borrows"
+	// TransactionKeyReserves reserves
+	TransactionKeyReserves = "reserves"
+	// TransactionKeyCTokens ctokens
+	TransactionKeyCTokens = "ctokens"
+	// TransactionKeyCTokenAssetID ctoken asset id
+	TransactionKeyCTokenAssetID = "ctoken_asset_id"
+	// TransactionKeyOrigin origin
+	TransactionKeyOrigin = "origin"
+	// TransactionKeySupply supply
+	TransactionKeySupply = "supply"
+	// TransactionKeyBorrow borrow
+	TransactionKeyBorrow = "borrow"
+	// TransactionKeyMarket market
+	TransactionKeyMarket = "market"
+)
+
 type Market struct {
 	AssetID       string          `json:"asset_id"`
 	Symbol        string          `json:"symbol"`
