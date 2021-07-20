@@ -1,6 +1,7 @@
 package compound
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
@@ -8,6 +9,10 @@ import (
 	"github.com/fox-one/pkg/uuid"
 	"github.com/jmoiron/sqlx/types"
 	"github.com/shopspring/decimal"
+)
+
+var (
+	BlocksPerYear = decimal.NewFromInt(2102400)
 )
 
 // ActionType compound action type
@@ -219,6 +224,30 @@ func (p *PayRequest) Validate() error {
 	}
 
 	return nil
+}
+
+// TransactionExtraData extra data
+type TransactionExtraData map[string]interface{}
+
+// NewTransactionExtra new transaction extra instance
+func NewTransactionExtra() TransactionExtraData {
+	d := make(TransactionExtraData)
+	return d
+}
+
+// Put put data
+func (t TransactionExtraData) Put(key string, value string) {
+	t[key] = value
+}
+
+// Format format as []byte by default
+func (t TransactionExtraData) Format() []byte {
+	bs, e := json.Marshal(t)
+	if e != nil {
+		return []byte("{}")
+	}
+
+	return bs
 }
 
 func NewBasicMemoValues(actionType ActionType, followID string) (string, []interface{}, error) {
