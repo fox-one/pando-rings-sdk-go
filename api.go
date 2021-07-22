@@ -110,6 +110,7 @@ func endPoint() string {
 	return Endpoint
 }
 
+// RequestSupply request supply action url
 func RequestSupply(ctx context.Context, followID string, assetID string, amount decimal.Decimal) (string, string, error) {
 	fID, memoValues, err := NewBasicMemoValues(ActionTypeSupply, followID)
 	if err != nil {
@@ -137,6 +138,7 @@ func RequestSupply(ctx context.Context, followID string, assetID string, amount 
 	return fID, url, nil
 }
 
+// RequestPledge request pledge action url
 func RequestPledge(ctx context.Context, followID string, ctokenAssetID string, amount decimal.Decimal) (string, string, error) {
 	fID, memoValues, err := NewBasicMemoValues(ActionTypePledge, followID)
 	if err != nil {
@@ -163,6 +165,7 @@ func RequestPledge(ctx context.Context, followID string, ctokenAssetID string, a
 	return fID, url, nil
 }
 
+// RequestUnpledge request unpledge action url
 func RequestUnpledge(ctx context.Context, followID string, ctokenAssetID string, ctokenAmount decimal.Decimal) (string, string, error) {
 	fID, memoValues, err := NewBasicMemoValues(ActionTypeUnpledge, followID)
 	if err != nil {
@@ -196,6 +199,7 @@ func RequestUnpledge(ctx context.Context, followID string, ctokenAssetID string,
 	return fID, url, nil
 }
 
+// RequestQuickPledge request quick_pledge action url
 func RequestQuickPledge(ctx context.Context, followID string, assetID string, amount decimal.Decimal) (string, string, error) {
 	fID, memoValues, err := NewBasicMemoValues(ActionTypeQuickPledge, followID)
 	if err != nil {
@@ -222,6 +226,7 @@ func RequestQuickPledge(ctx context.Context, followID string, assetID string, am
 	return fID, url, nil
 }
 
+// RequestRedeem request redeem action url
 func RequestRedeem(ctx context.Context, followID string, ctokenAssetID string, redeemAmount decimal.Decimal) (string, string, error) {
 	fID, memoValues, err := NewBasicMemoValues(ActionTypeRedeem, followID)
 	if err != nil {
@@ -248,6 +253,7 @@ func RequestRedeem(ctx context.Context, followID string, ctokenAssetID string, r
 	return fID, url, nil
 }
 
+// RequestQuickRedeem request quick_redeem action url
 func RequestQuickRedeem(ctx context.Context, followID string, ctokenAssetID string, redeemAmount decimal.Decimal) (string, string, error) {
 	fID, memoValues, err := NewBasicMemoValues(ActionTypeQuickRedeem, followID)
 	if err != nil {
@@ -281,6 +287,7 @@ func RequestQuickRedeem(ctx context.Context, followID string, ctokenAssetID stri
 	return fID, url, nil
 }
 
+// RequestBorrow request borrow action url
 func RequestBorrow(ctx context.Context, followID string, assetID string, borrowAmount decimal.Decimal) (string, string, error) {
 	fID, memoValues, err := NewBasicMemoValues(ActionTypeBorrow, followID)
 	if err != nil {
@@ -314,6 +321,7 @@ func RequestBorrow(ctx context.Context, followID string, assetID string, borrowA
 	return fID, url, nil
 }
 
+// RequestQuickBorrow request quick_borrow action url
 func RequestQuickBorrow(ctx context.Context, followID string, supplyAssetID string, supplyAmount decimal.Decimal, borrowAssetID string, borrowAmount decimal.Decimal) (string, string, error) {
 	fID, memoValues, err := NewBasicMemoValues(ActionTypeQuickBorrow, followID)
 	if err != nil {
@@ -348,6 +356,7 @@ func RequestQuickBorrow(ctx context.Context, followID string, supplyAssetID stri
 	return fID, url, nil
 }
 
+// RequestRepay request repay action url
 func RequestRepay(ctx context.Context, followID string, assetID string, amount decimal.Decimal) (string, string, error) {
 	fID, memoValues, err := NewBasicMemoValues(ActionTypeRepay, followID)
 	if err != nil {
@@ -374,6 +383,7 @@ func RequestRepay(ctx context.Context, followID string, assetID string, amount d
 	return fID, url, nil
 }
 
+// RequestLiquidate request liquidate action url
 func RequestLiquidate(ctx context.Context, followID string, supplyUserID string, supplyCTokenAssetID string, borrowAssetID string, repayAmount decimal.Decimal) (string, string, error) {
 	fID, memoValues, err := NewBasicMemoValues(ActionTypeLiquidate, followID)
 	if err != nil {
