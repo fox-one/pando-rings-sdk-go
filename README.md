@@ -32,6 +32,6 @@ compound.RequestBorrow(...)
 compound.RequestLiquidate(...)
 ```
 
-More details of the API using, please Read the [example](./example) 
+More details of the API using, please read the [example](./example) 
 
 [LICENSE](./LICENSE)
