@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/fox-one/compound-sdk-go"
-	"github.com/fox-one/compound-sdk-go/example/cmd"
+	rings "github.com/fox-one/pando-rings-sdk-go"
+	"github.com/fox-one/pando-rings-sdk-go/example/cmd"
 	"github.com/spf13/cobra"
 )
 
 func init() {
 	fmt.Println("init main")
 	cobra.OnInitialize(func() {
-		compound.Endpoint = "https://compound-test-api.fox.one"
+		rings.Endpoint = "https://compound-test-api.fox.one"
 	})
 }
 
