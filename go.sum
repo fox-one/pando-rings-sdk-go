@@ -123,8 +123,6 @@ github.com/envoyproxy/go-control-plane v0.9.9-0.20210217033140-668b12f5399d/go.m
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5/go.mod h1:a2zkGnVExMxdzMo3M0Hi/3sEU+cWnZpSni0O6/Yb/P0=
 github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=
-github.com/fox-one/compound-sdk-go v0.1.2 h1:3p/5PxX2mhvue1LyUcmRBvWNvepLUwB/cCk0VibL0g0=
-github.com/fox-one/compound-sdk-go v0.1.2/go.mod h1:69KvLJLmnlNds4UrCrOgHAOQxGVB1IvUTvED8syFqxo=
 github.com/fox-one/mixin-sdk v0.0.8/go.mod h1:rfW6AexRjooP/Q+1LgzRUg86Se7m69gjBye7+eF6A/c=
 github.com/fox-one/mixin-sdk v1.1.9/go.mod h1:2WYrF99CbJuEOS9HqV7JhZwejF9vg334B9JXURpbSf0=
 github.com/fox-one/mixin-sdk v1.4.5/go.mod h1:EZz+CvQxU2BLgwOQeqOPP4RFentYKc3y6K4Xv9lnulk=
