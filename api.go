@@ -1,4 +1,4 @@
-package compound
+package rings
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fox-one/compound-sdk-go/mtg"
+	"github.com/fox-one/pando-rings-sdk-go/mtg"
 	"github.com/fox-one/pkg/uuid"
 	"github.com/shopspring/decimal"
 )

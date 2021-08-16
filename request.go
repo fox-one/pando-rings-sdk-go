@@ -1,4 +1,4 @@
-package compound
+package rings
 
 import (
 	"context"

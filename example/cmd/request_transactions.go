@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/fox-one/compound-sdk-go"
+	rings "github.com/fox-one/pando-rings-sdk-go"
 	"github.com/spf13/cobra"
 )
 
 var requestTransactionCmd = cobra.Command{
 	Use: "transaction",
 	Run: func(cmd *cobra.Command, args []string) {
-		transactions, err := compound.RequestTransactions(cmd.Context(), 50, time.Now().AddDate(0, 0, -10))
+		transactions, err := rings.RequestTransactions(cmd.Context(), 50, time.Now().AddDate(0, 0, -10))
 		if err != nil {
 			panic(err)
 		}

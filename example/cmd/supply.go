@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/fox-one/compound-sdk-go"
+	"github.com/fox-one/pando-rings-sdk-go"
 	"github.com/fox-one/pkg/uuid"
 	"github.com/shopspring/decimal"
 	"github.com/spf13/cobra"
@@ -10,7 +10,7 @@ import (
 var supplyCmd = cobra.Command{
 	Use: "supply",
 	Run: func(cmd *cobra.Command, args []string) {
-		fID, url, err := compound.RequestSupply(cmd.Context(), uuid.New(), USDTAssetID, decimal.NewFromFloat(0.01))
+		fID, url, err := rings.RequestSupply(cmd.Context(), uuid.New(), USDTAssetID, decimal.NewFromFloat(0.01))
 		if err != nil {
 			panic(err)
 		}
@@ -22,7 +22,7 @@ var supplyCmd = cobra.Command{
 var pledgeCmd = cobra.Command{
 	Use: "pledge",
 	Run: func(cmd *cobra.Command, args []string) {
-		fID, url, err := compound.RequestPledge(cmd.Context(), uuid.New(), cETHAssetID, decimal.NewFromFloat(0.0001))
+		fID, url, err := rings.RequestPledge(cmd.Context(), uuid.New(), cETHAssetID, decimal.NewFromFloat(0.0001))
 		if err != nil {
 			panic(err)
 		}
@@ -34,7 +34,7 @@ var pledgeCmd = cobra.Command{
 var unpledgeCmd = cobra.Command{
 	Use: "unpledge",
 	Run: func(cmd *cobra.Command, args []string) {
-		fID, url, err := compound.RequestUnpledge(cmd.Context(), uuid.New(), cETHAssetID, decimal.NewFromFloat(0.0001))
+		fID, url, err := rings.RequestUnpledge(cmd.Context(), uuid.New(), cETHAssetID, decimal.NewFromFloat(0.0001))
 		if err != nil {
 			panic(err)
 		}
@@ -46,7 +46,7 @@ var unpledgeCmd = cobra.Command{
 var redeemCmd = cobra.Command{
 	Use: "redeem",
 	Run: func(cmd *cobra.Command, args []string) {
-		fID, url, err := compound.RequestRedeem(cmd.Context(), uuid.New(), cETHAssetID, decimal.NewFromFloat(0.0001))
+		fID, url, err := rings.RequestRedeem(cmd.Context(), uuid.New(), cETHAssetID, decimal.NewFromFloat(0.0001))
 		if err != nil {
 			panic(err)
 		}
@@ -58,7 +58,7 @@ var redeemCmd = cobra.Command{
 var quickPledgeCmd = cobra.Command{
 	Use: "quickpledge",
 	Run: func(cmd *cobra.Command, args []string) {
-		fID, url, err := compound.RequestQuickPledge(cmd.Context(), uuid.New(), ETHAssetID, decimal.NewFromFloat(0.0001))
+		fID, url, err := rings.RequestQuickPledge(cmd.Context(), uuid.New(), ETHAssetID, decimal.NewFromFloat(0.0001))
 		if err != nil {
 			panic(err)
 		}
@@ -70,7 +70,7 @@ var quickPledgeCmd = cobra.Command{
 var quickRedeemCmd = cobra.Command{
 	Use: "quickredeem",
 	Run: func(cmd *cobra.Command, args []string) {
-		fID, url, err := compound.RequestQuickRedeem(cmd.Context(), uuid.New(), cETHAssetID, decimal.NewFromFloat(0.0001))
+		fID, url, err := rings.RequestQuickRedeem(cmd.Context(), uuid.New(), cETHAssetID, decimal.NewFromFloat(0.0001))
 		if err != nil {
 			panic(err)
 		}

@@ -3,14 +3,14 @@ package cmd
 import (
 	"encoding/json"
 
-	"github.com/fox-one/compound-sdk-go"
+	rings "github.com/fox-one/pando-rings-sdk-go"
 	"github.com/spf13/cobra"
 )
 
 var requestMarketCmd = &cobra.Command{
 	Use: "market",
 	Run: func(cmd *cobra.Command, args []string) {
-		markets, err := compound.RequestAllMarkets(cmd.Context())
+		markets, err := rings.RequestAllMarkets(cmd.Context())
 		if err != nil {
 			panic(err)
 		}

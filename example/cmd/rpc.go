@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/fox-one/compound-sdk-go/example/rpc"
+	"github.com/fox-one/pando-rings-sdk-go/example/rpc"
 	"github.com/fox-one/pkg/uuid"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/types/known/timestamppb"

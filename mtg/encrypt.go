@@ -8,7 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 
-	"github.com/fox-one/compound-sdk-go/aes"
+	"github.com/fox-one/pando-rings-sdk-go/aes"
 	"github.com/fox-one/mixin-sdk-go"
 	"github.com/fox-one/mixin-sdk-go/edwards25519"
 )

@@ -1,4 +1,4 @@
-module github.com/fox-one/compound-sdk-go
+module github.com/fox-one/pando-rings-sdk-go
 
 go 1.16
 
