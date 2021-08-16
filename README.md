@@ -1,10 +1,10 @@
 # compound-sdk-go
-compound sdk
+Pando Rings SDK
 
 ## Installing
 
 ```
-go get github.com/fox-one/compound-sdk-go
+go get github.com/fox-one/pando-rings-sdk-go
 ```
 
 ## Using
@@ -12,24 +12,24 @@ go get github.com/fox-one/compound-sdk-go
 * Initialize endpoint
   
 ```
-compound.Endpoint = "https://compound-test-api.fox.one"
+rings.Endpoint = "https://compound-test-api.fox.one"
 ```
 * Request supply action url
   
 ```
-compound.RequestSupply(...)
+rings.RequestSupply(...)
 ```
 
 * Request borrow action url
 
 ```
-compound.RequestBorrow(...)
+rings.RequestBorrow(...)
 ```
 
 * Request Liquidate action url
   
 ```
-compound.RequestLiquidate(...)
+rings.RequestLiquidate(...)
 ```
 
 More details of the API using, please read the [example](./example) 
