@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	rings "github.com/fox-one/pando-rings-sdk-go"
+	"github.com/fox-one/pando-rings-sdk-go"
 	"github.com/fox-one/pkg/uuid"
 	"github.com/shopspring/decimal"
 	"github.com/spf13/cobra"
