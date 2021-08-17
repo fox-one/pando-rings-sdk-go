@@ -1,5 +1,4 @@
-# compound-sdk-go
-Pando Rings SDK
+# Pando Rings SDK
 
 ## Installing
 
