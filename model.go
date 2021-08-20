@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/fox-one/mixin-sdk-go"
 	"github.com/fox-one/pkg/uuid"
 	"github.com/jmoiron/sqlx/types"
 	"github.com/shopspring/decimal"
@@ -273,6 +274,11 @@ func (p *PayRequest) Validate() error {
 	}
 
 	return nil
+}
+
+type PayInput struct {
+	URL           string               `json:"url"`
+	TransferInput *mixin.TransferInput `json:"transfer_input"`
 }
 
 // TransactionExtraData extra data
