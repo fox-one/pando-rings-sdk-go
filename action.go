@@ -1,7 +1,6 @@
 package rings
 
 import (
-	"github.com/fox-one/msgpack"
 	"github.com/fox-one/pando-rings-sdk-go/mtg/types"
 )
 
@@ -124,22 +123,4 @@ func (i *ActionType) UnmarshalBinary(data []byte) error {
 
 	*i = ActionType(b)
 	return nil
-}
-
-type TransactionAction struct {
-	FollowID []byte `msgpack:"f,omitempty"`
-	Body     []byte `msgpack:"b,omitempty"`
-}
-
-func (action TransactionAction) Encode() ([]byte, error) {
-	return msgpack.Marshal(action)
-}
-
-func DecodeTransactionAction(b []byte) (*TransactionAction, error) {
-	var action TransactionAction
-	if err := msgpack.Unmarshal(b, &action); err != nil {
-		return nil, err
-	}
-
-	return &action, nil
 }

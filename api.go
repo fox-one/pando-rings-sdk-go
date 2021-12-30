@@ -84,21 +84,11 @@ func RequestPayURL(ctx context.Context, payRequest *PayRequest) (*PayInput, erro
 }
 
 func encodeParams(followID string, args ...interface{}) (string, error) {
-	var action TransactionAction
-	if fid, err := uuid.FromString(followID); err != nil {
-		action.FollowID = fid.Bytes()
-	}
 	data, err := mtg.Encode(args...)
 	if err != nil {
 		return "", err
 	}
-	action.Body = data
-
-	memo, err := action.Encode()
-	if err != nil {
-		return "", err
-	}
-	return base64.StdEncoding.EncodeToString(memo), nil
+	return base64.StdEncoding.EncodeToString(data), nil
 }
 
 func endPoint() string {
