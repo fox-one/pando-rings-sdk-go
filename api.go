@@ -83,13 +83,22 @@ func RequestPayURL(ctx context.Context, payRequest *PayRequest) (*PayInput, erro
 	return &payInput, nil
 }
 
-func mtgEncodingToBase64(args []interface{}) (string, error) {
-	bytes, err := mtg.Encode(args...)
+func encodeParams(followID string, args ...interface{}) (string, error) {
+	var action TransactionAction
+	if fid, err := uuid.FromString(followID); err != nil {
+		action.FollowID = fid.Bytes()
+	}
+	data, err := mtg.Encode(args...)
 	if err != nil {
 		return "", err
 	}
+	action.Body = data
 
-	return base64.StdEncoding.EncodeToString(bytes), nil
+	memo, err := action.Encode()
+	if err != nil {
+		return "", err
+	}
+	return base64.StdEncoding.EncodeToString(memo), nil
 }
 
 func endPoint() string {
@@ -108,314 +117,249 @@ func endPoint() string {
 }
 
 // RequestSupply request supply action url
-func RequestSupply(ctx context.Context, followID string, assetID string, amount decimal.Decimal) (string, *PayInput, error) {
-	fID, memoValues, err := NewBasicMemoValues(ActionTypeSupply, followID)
+func RequestSupply(ctx context.Context, followID string, assetID string, amount decimal.Decimal) (*PayInput, error) {
+	memo, err := encodeParams(followID, ActionTypeSupply)
 	if err != nil {
-		return "", nil, err
-	}
-
-	memoBase64, err := mtgEncodingToBase64(memoValues)
-	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
 	payload := PayRequest{
-		MemoBase64: memoBase64,
+		MemoBase64: memo,
 		AssetID:    assetID,
 		Amount:     amount,
 		TraceID:    uuid.New(),
-		FollowID:   fID,
+		FollowID:   followID,
 	}
 
 	payInput, err := RequestPayURL(ctx, &payload)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	return fID, payInput, nil
+	return payInput, nil
 }
 
 // RequestPledge request pledge action url
-func RequestPledge(ctx context.Context, followID string, ctokenAssetID string, amount decimal.Decimal) (string, *PayInput, error) {
-	fID, memoValues, err := NewBasicMemoValues(ActionTypePledge, followID)
+func RequestPledge(ctx context.Context, followID string, ctokenAssetID string, amount decimal.Decimal) (*PayInput, error) {
+	memo, err := encodeParams(followID, ActionTypePledge)
 	if err != nil {
-		return "", nil, err
-	}
-
-	memoBase64, err := mtgEncodingToBase64(memoValues)
-	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
 	payload := PayRequest{
-		MemoBase64: memoBase64,
+		MemoBase64: memo,
 		AssetID:    ctokenAssetID,
 		Amount:     amount,
 		TraceID:    uuid.New(),
-		FollowID:   fID,
+		FollowID:   followID,
 	}
 	payInput, err := RequestPayURL(ctx, &payload)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	return fID, payInput, nil
+	return payInput, nil
 }
 
 // RequestUnpledge request unpledge action url
-func RequestUnpledge(ctx context.Context, followID string, ctokenAssetID string, ctokenAmount decimal.Decimal) (string, *PayInput, error) {
-	fID, memoValues, err := NewBasicMemoValues(ActionTypeUnpledge, followID)
-	if err != nil {
-		return "", nil, err
-	}
-
+func RequestUnpledge(ctx context.Context, followID string, ctokenAssetID string, ctokenAmount decimal.Decimal) (*PayInput, error) {
 	ctokenAsset, err := uuid.FromString(ctokenAssetID)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	memoValues = append(memoValues, ctokenAsset)
-	memoValues = append(memoValues, ctokenAmount)
-
-	memoBase64, err := mtgEncodingToBase64(memoValues)
+	memo, err := encodeParams(followID, ActionTypeUnpledge, ctokenAsset, ctokenAmount)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
 	payload := PayRequest{
-		MemoBase64: memoBase64,
+		MemoBase64: memo,
 		WithGas:    true,
 		TraceID:    uuid.New(),
-		FollowID:   fID,
+		FollowID:   followID,
 	}
 	payInput, err := RequestPayURL(ctx, &payload)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	return fID, payInput, nil
+	return payInput, nil
 }
 
 // RequestQuickPledge request quick_pledge action url
-func RequestQuickPledge(ctx context.Context, followID string, assetID string, amount decimal.Decimal) (string, *PayInput, error) {
-	fID, memoValues, err := NewBasicMemoValues(ActionTypeQuickPledge, followID)
+func RequestQuickPledge(ctx context.Context, followID string, assetID string, amount decimal.Decimal) (*PayInput, error) {
+	memo, err := encodeParams(followID, ActionTypeQuickPledge)
 	if err != nil {
-		return "", nil, err
-	}
-
-	memoBase64, err := mtgEncodingToBase64(memoValues)
-	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
 	payload := PayRequest{
-		MemoBase64: memoBase64,
+		MemoBase64: memo,
 		AssetID:    assetID,
 		Amount:     amount,
 		TraceID:    uuid.New(),
-		FollowID:   fID,
+		FollowID:   followID,
 	}
 	payInput, err := RequestPayURL(ctx, &payload)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	return fID, payInput, nil
+	return payInput, nil
 }
 
 // RequestRedeem request redeem action url
-func RequestRedeem(ctx context.Context, followID string, ctokenAssetID string, redeemAmount decimal.Decimal) (string, *PayInput, error) {
-	fID, memoValues, err := NewBasicMemoValues(ActionTypeRedeem, followID)
+func RequestRedeem(ctx context.Context, followID string, ctokenAssetID string, redeemAmount decimal.Decimal) (*PayInput, error) {
+	memo, err := encodeParams(followID, ActionTypeRedeem)
 	if err != nil {
-		return "", nil, err
-	}
-
-	memoBase64, err := mtgEncodingToBase64(memoValues)
-	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
 	payload := PayRequest{
-		MemoBase64: memoBase64,
+		MemoBase64: memo,
 		AssetID:    ctokenAssetID,
 		Amount:     redeemAmount,
 		TraceID:    uuid.New(),
-		FollowID:   fID,
+		FollowID:   followID,
 	}
 	payInput, err := RequestPayURL(ctx, &payload)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	return fID, payInput, nil
+	return payInput, nil
 }
 
 // RequestQuickRedeem request quick_redeem action url
-func RequestQuickRedeem(ctx context.Context, followID string, ctokenAssetID string, redeemAmount decimal.Decimal) (string, *PayInput, error) {
-	fID, memoValues, err := NewBasicMemoValues(ActionTypeQuickRedeem, followID)
-	if err != nil {
-		return "", nil, err
-	}
-
+func RequestQuickRedeem(ctx context.Context, followID string, ctokenAssetID string, redeemAmount decimal.Decimal) (*PayInput, error) {
 	ctokenAsset, err := uuid.FromString(ctokenAssetID)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	memoValues = append(memoValues, ctokenAsset)
-	memoValues = append(memoValues, redeemAmount)
-
-	memoBase64, err := mtgEncodingToBase64(memoValues)
+	memo, err := encodeParams(followID, ActionTypeQuickRedeem, ctokenAsset, redeemAmount)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
 	payload := PayRequest{
-		MemoBase64: memoBase64,
+		MemoBase64: memo,
 		WithGas:    true,
 		TraceID:    uuid.New(),
-		FollowID:   fID,
+		FollowID:   followID,
 	}
 	payInput, err := RequestPayURL(ctx, &payload)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	return fID, payInput, nil
+	return payInput, nil
 }
 
 // RequestBorrow request borrow action url
-func RequestBorrow(ctx context.Context, followID string, assetID string, borrowAmount decimal.Decimal) (string, *PayInput, error) {
-	fID, memoValues, err := NewBasicMemoValues(ActionTypeBorrow, followID)
-	if err != nil {
-		return "", nil, err
-	}
-
+func RequestBorrow(ctx context.Context, followID string, assetID string, borrowAmount decimal.Decimal) (*PayInput, error) {
 	asset, err := uuid.FromString(assetID)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	memoValues = append(memoValues, asset)
-	memoValues = append(memoValues, borrowAmount)
-
-	memoBase64, err := mtgEncodingToBase64(memoValues)
+	memo, err := encodeParams(followID, ActionTypeBorrow, asset, borrowAmount)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
 	payload := PayRequest{
-		MemoBase64: memoBase64,
+		MemoBase64: memo,
 		WithGas:    true,
 		TraceID:    uuid.New(),
-		FollowID:   fID,
+		FollowID:   followID,
 	}
 	payInput, err := RequestPayURL(ctx, &payload)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	return fID, payInput, nil
+	return payInput, nil
 }
 
 // RequestQuickBorrow request quick_borrow action url
-func RequestQuickBorrow(ctx context.Context, followID string, supplyAssetID string, supplyAmount decimal.Decimal, borrowAssetID string, borrowAmount decimal.Decimal) (string, *PayInput, error) {
-	fID, memoValues, err := NewBasicMemoValues(ActionTypeQuickBorrow, followID)
-	if err != nil {
-		return "", nil, err
-	}
-
+func RequestQuickBorrow(ctx context.Context, followID string, supplyAssetID string, supplyAmount decimal.Decimal, borrowAssetID string, borrowAmount decimal.Decimal) (*PayInput, error) {
 	borrowAsset, err := uuid.FromString(borrowAssetID)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	memoValues = append(memoValues, borrowAsset)
-	memoValues = append(memoValues, borrowAmount)
-
-	memoBase64, err := mtgEncodingToBase64(memoValues)
+	memo, err := encodeParams(followID, ActionTypeQuickBorrow, borrowAsset, borrowAmount)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
 	payload := PayRequest{
-		MemoBase64: memoBase64,
+		MemoBase64: memo,
 		AssetID:    supplyAssetID,
 		Amount:     supplyAmount,
 		TraceID:    uuid.New(),
-		FollowID:   fID,
+		FollowID:   followID,
 	}
 	payInput, err := RequestPayURL(ctx, &payload)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	return fID, payInput, nil
+	return payInput, nil
 }
 
 // RequestRepay request repay action url
-func RequestRepay(ctx context.Context, followID string, assetID string, amount decimal.Decimal) (string, *PayInput, error) {
-	fID, memoValues, err := NewBasicMemoValues(ActionTypeRepay, followID)
+func RequestRepay(ctx context.Context, followID string, assetID string, amount decimal.Decimal) (*PayInput, error) {
+	memo, err := encodeParams(followID, ActionTypeRepay)
 	if err != nil {
-		return "", nil, err
-	}
-
-	memoBase64, err := mtgEncodingToBase64(memoValues)
-	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
 	payload := PayRequest{
-		MemoBase64: memoBase64,
+		MemoBase64: memo,
 		AssetID:    assetID,
 		Amount:     amount,
 		TraceID:    uuid.New(),
-		FollowID:   fID,
+		FollowID:   followID,
 	}
 	payInput, err := RequestPayURL(ctx, &payload)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	return fID, payInput, nil
+	return payInput, nil
 }
 
 // RequestLiquidate request liquidate action url
-func RequestLiquidate(ctx context.Context, followID string, supplyUserID string, supplyCTokenAssetID string, borrowAssetID string, repayAmount decimal.Decimal) (string, *PayInput, error) {
-	fID, memoValues, err := NewBasicMemoValues(ActionTypeLiquidate, followID)
+func RequestLiquidate(ctx context.Context, followID string, userAddress string, supplyCTokenAssetID string, borrowAssetID string, repayAmount decimal.Decimal) (*PayInput, error) {
+	address, err := uuid.FromString(userAddress)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
-
-	seizedAddress := NewUserAddress(supplyUserID)
-	address, err := uuid.FromString(seizedAddress)
-	if err != nil {
-		return "", nil, err
-	}
-	memoValues = append(memoValues, address)
 
 	supplyAsset, err := uuid.FromString(supplyCTokenAssetID)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
-	memoValues = append(memoValues, supplyAsset)
 
-	memoBase64, err := mtgEncodingToBase64(memoValues)
+	memo, err := encodeParams(followID, ActionTypeLiquidate, address, supplyAsset)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
 	payload := PayRequest{
-		MemoBase64: memoBase64,
+		MemoBase64: memo,
 		AssetID:    borrowAssetID,
 		Amount:     repayAmount,
 		TraceID:    uuid.New(),
-		FollowID:   fID,
+		FollowID:   followID,
 	}
 	payInput, err := RequestPayURL(ctx, &payload)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 
-	return fID, payInput, nil
+	return payInput, nil
 }
