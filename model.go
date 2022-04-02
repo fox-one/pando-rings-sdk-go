@@ -70,6 +70,7 @@ type Market struct {
 	CTokenAssetID string          `json:"ctoken_asset_id"`
 	TotalCash     decimal.Decimal `json:"total_cash"`
 	TotalBorrows  decimal.Decimal `json:"total_borrows"`
+	MaxPledge     decimal.Decimal `json:"max_pledge"`
 	// 保留金
 	Reserves decimal.Decimal `json:"reserves"`
 	// CToken 累计铸造出来的币的数量
